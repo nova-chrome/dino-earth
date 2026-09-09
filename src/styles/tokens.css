@@ -6,47 +6,39 @@
    =================================================================== */
 :root {
   /* Surfaces */
-  --bg: #05070a;
-  --bg-grad-1: rgba(79, 229, 176, 0.12);
-  --bg-grad-2: rgba(41, 192, 240, 0.08);
-  --surface: rgba(255, 255, 255, 0.045);
-  --surface-2: rgba(255, 255, 255, 0.07);
+  --bg: #020608;
+  --bg-grad-1: rgba(245, 83, 62, 0.08);
+  --bg-grad-2: rgba(30, 92, 93, 0.09);
+  --surface: rgba(225, 239, 231, 0.045);
+  --surface-2: rgba(225, 239, 231, 0.07);
 
   /* Ink */
-  --fg: #f4f7fa;
-  --fg-muted: #9aa4b2;
-  --fg-faint: #626d7d;
+  --fg: #edf4ef;
+  --fg-muted: #a6b6ae;
+  --fg-faint: #65766f;
 
   /* Hairlines */
-  --hair: rgba(255, 255, 255, 0.1);
-  --hair-2: rgba(255, 255, 255, 0.06);
+  --hair: rgba(231, 244, 237, 0.14);
+  --hair-2: rgba(231, 244, 237, 0.07);
 
   /* Accent — ONE accent. May be a 2–4 stop gradient within ~80° of hue. */
-  --primary: #4fe5b0;
-  --accent: linear-gradient(
-    115deg,
-    #c8f56e 0%,
-    #5aeeb0 42%,
-    #34dcd8 74%,
-    #29c0f0 100%
-  );
-  --accent-ink: #04140e;
+  --primary: #f5533e;
+  --accent: linear-gradient(115deg, #ff765e 0%, #f5533e 60%, #be281d 100%);
+  --accent-ink: #170402;
 
   /* Radius */
-  --radius: 22px;
-  --radius-sm: 12px;
-  --radius-lg: 26px;
+  --radius: 2px;
+  --radius-sm: 1px;
+  --radius-lg: 3px;
 
   /* Depth */
-  --shadow: 0 50px 120px -50px rgba(0, 0, 0, 0.9);
-  --glow: 0 30px 80px -40px rgba(79, 229, 176, 0.5);
+  --shadow: 0 50px 120px -50px rgba(0, 0, 0, 0.95);
+  --glow: 0 30px 80px -40px rgba(245, 83, 62, 0.46);
 
   /* Type */
-  --font-head: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-    sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text',
-    sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-head: 'Archivo Black', Impact, sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   /* Motion */
   --dur: 0.4s;
@@ -54,8 +46,8 @@
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Atmosphere */
-  --grain: 0.035;
-  --vignette: rgba(0, 0, 0, 0.22);
+  --grain: 0.052;
+  --vignette: rgba(0, 0, 0, 0.34);
 
   /* Responsive gutter — fluid side / vertical padding */
   --gutter: clamp(28px, 6vw, 120px);
