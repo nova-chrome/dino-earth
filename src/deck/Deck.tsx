@@ -85,6 +85,13 @@ export default function Deck({ children }: { children: ReactNode }) {
     [children]
   );
   const total = slides.length;
+  const slideIdAt = useCallback(
+    (index: number) =>
+      String(
+        (slides[index]?.props as { nav?: string } | undefined)?.nav ?? index
+      ),
+    [slides]
+  );
   const isPresenter = useMemo(
     () => new URLSearchParams(window.location.search).has('presenter'),
     []
@@ -116,25 +123,34 @@ export default function Deck({ children }: { children: ReactNode }) {
 
   // per-slide build maxima (so going back restores the right click state) and
   // per-slide annotations (so drawings persist on the slide they were made).
-  const maxMap = useRef<Record<number, number>>({});
+  const maxMap = useRef<Record<string, number>>({});
   const annStore = useRef<Record<number, Stroke[]>>({});
   const slideRef = useRef(slide);
+  const slideIdRef = useRef(slideIdAt(slide));
   slideRef.current = slide;
+  slideIdRef.current = slideIdAt(slide);
 
   const registerMax = useCallback((at: number) => {
     const m = maxMap.current;
-    m[slideRef.current] = Math.max(m[slideRef.current] || 0, at);
+    m[slideIdRef.current] = Math.max(m[slideIdRef.current] || 0, at);
     setCurMax((c) => Math.max(c, at));
   }, []);
+
+  // Slide order changes during editing should not transfer reveal counts from
+  // the old occupant of a slide number to the new one.
+  useEffect(() => {
+    setClicks(0);
+    setCurMax(maxMap.current[slideIdAt(slide)] || 0);
+  }, [slides, slide, slideIdAt]);
 
   const go = useCallback(
     (i: number) => {
       const n = Math.max(0, Math.min(total - 1, i));
       setSlide(n);
       setClicks(0);
-      setCurMax(maxMap.current[n] || 0);
+      setCurMax(maxMap.current[slideIdAt(n)] || 0);
     },
-    [total]
+    [slideIdAt, total]
   );
   const next = useCallback(() => {
     if (clicks < curMax) {
@@ -145,9 +161,9 @@ export default function Deck({ children }: { children: ReactNode }) {
       const n = slide + 1;
       setSlide(n);
       setClicks(0);
-      setCurMax(maxMap.current[n] || 0);
+      setCurMax(maxMap.current[slideIdAt(n)] || 0);
     }
-  }, [clicks, curMax, slide, total]);
+  }, [clicks, curMax, slide, slideIdAt, total]);
   const prev = useCallback(() => {
     if (clicks > 0) {
       setClicks(clicks - 1);
@@ -155,12 +171,12 @@ export default function Deck({ children }: { children: ReactNode }) {
     }
     if (slide > 0) {
       const n = slide - 1;
-      const m = maxMap.current[n] || 0;
+      const m = maxMap.current[slideIdAt(n)] || 0;
       setSlide(n);
       setClicks(m);
       setCurMax(m);
     }
-  }, [clicks, slide]);
+  }, [clicks, slide, slideIdAt]);
 
   const toggleFs = useCallback(() => {
     if (document.fullscreenElement) document.exitFullscreen();
