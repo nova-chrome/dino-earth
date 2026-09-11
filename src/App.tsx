@@ -2,59 +2,93 @@ import type { ReactNode } from 'react';
 import Deck from './deck/Deck';
 import Slide from './deck/Slide';
 import Build from './deck/Build';
-import blueMarble from './assets/blue-marble.jpg';
-import dinosaurEarthHero from './assets/dinosaur-earth-hero.png';
-import raptorCivilization from './assets/raptor-civilization.png';
-import desaSatellite from './assets/desa-satellite.png';
 import dinosaurEarthFinal from './assets/dinosaur-earth-final.png';
 import forensicRaptorMap from './assets/forensic-raptor-map.png';
+import blueMarble from './assets/blue-marble.jpg';
+import raptorCivilization from './assets/raptor-civilization.png';
+import portraitPlato from './assets/portrait-plato.png';
+import portraitGandalf from './assets/portrait-gandalf.png';
+import portraitConfucius from './assets/portrait-confucius.png';
+import portraitNewton from './assets/portrait-newton.png';
+import trumpSymbolism from './assets/trump-symbolism.png';
+import elonSymbolism from './assets/elon-symbolism.png';
+import zuckerbergSymbolism from './assets/zuckerberg-symbolism.png';
+import kanyeSymbolism from './assets/kanye-symbolism.png';
+import bezosSymbolism from './assets/bezos-symbolism.png';
+import vikingsFellToMoon from './assets/vikings-fell-to-moon.png';
+import evidenceComparison from './assets/evidence-comparison.png';
+import evidenceMountain from './assets/evidence-mountain.png';
+import evidenceLamp from './assets/evidence-lamp.png';
+import evidencePooh from './assets/evidence-pooh.png';
+import kidsKnowDinosaurEarth from './assets/kids-know-dinosaur-earth.png';
 import './dinosaur-earth.css';
 
-type ChromeProps = {
+type ClassifiedChapterProps = {
   number: string;
-  section: string;
-  children?: ReactNode;
+  title: string;
+  subtitle: string;
 };
 
-function Chrome({ number, section, children }: ChromeProps) {
+function ClassifiedChapter({ number, title, subtitle }: ClassifiedChapterProps) {
   return (
-    <>
-      <div className="de-classification">DESA // {section}</div>
-      <div className="de-slide-number">{number}</div>
-      <div className="de-bottom-rule" />
-      {children}
-    </>
-  );
-}
-
-function GravityVerdict() {
-  return (
-    <div className="gravity-verdict" aria-label="Dinosaur Earth Society gravity experiment verdict">
-      <div className="gravity-device">
-        <small>Experimental apparatus</small>
-        <strong>Small device</strong>
-        <p>Purpose: prove NASA wrong</p>
+    <section className="de-slide history-opener">
+      <div className="history-opener-number" aria-hidden="true">{number.padStart(2, '0')}</div>
+      <div className="history-opener-copy">
+        <span className="history-opener-label">Classified briefing</span>
+        <h1>{title}</h1>
+        <span className="history-opener-rule" />
+        <p>{subtitle}</p>
       </div>
-      <div className="gravity-status"><span>Gravity</span><strong>Is gone</strong></div>
-      <div className="verdict-stamps"><span className="false-stamp">NASA false</span><span className="true-stamp">Device true</span></div>
-    </div>
+      <div className="history-opener-footer">
+        <span>DESA archive</span>
+        <span>Section {number.padStart(2, '0')}</span>
+      </div>
+    </section>
   );
 }
 
-const anatomyLabels = [
-  { label: 'TAIL', className: 'tail' },
-  { label: 'TORSO', className: 'torso' },
-  { label: 'LEGS', className: 'legs' },
-  { label: 'ARMS', className: 'arms' },
-  { label: 'HEAD', className: 'head' },
-];
+function Paper({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <div className={`paper-sheet ${className}`}>{children}</div>;
+}
 
-const channelEvidence = [
-  { signal: 'SATELLITE FOOTAGE', feature: 'Reliable source, not NASA', className: 'geo-mountains' },
-  { signal: 'LUNAR ECLIPSES', feature: 'Dinosaur-shaped shadow', className: 'geo-florida' },
-  { signal: 'TAIL INCIDENT', feature: 'Scientists sailed off the tail', className: 'geo-tail' },
-  { signal: 'DIRECT OBSERVATION', feature: 'Curved and flat horizons', className: 'geo-trench' },
-  { signal: 'CONFESSIONS', feature: 'Two ex-NASA employees', className: 'geo-australia' },
+function SourceMark({ children }: { children: ReactNode }) {
+  return <span className="source-mark">{children}</span>;
+}
+
+type HistoryQuoteProps = {
+  src: string;
+  alt: string;
+  number: string;
+  quote: string;
+  attribution: string;
+  variant: 'philosopher' | 'wizard' | 'sage' | 'scientist';
+};
+
+function HistoryQuote({ src, alt, number, quote, attribution, variant }: HistoryQuoteProps) {
+  return (
+    <section className={`de-slide paper-slide history-quote-slide ${variant}`}>
+      <Paper className="history-quote-paper">
+        <div className="history-quote-number" aria-hidden="true">{number}</div>
+        <figure className="history-quote-portrait">
+          <div className="history-portrait-frame"><img src={src} alt={alt} /></div>
+          <figcaption>Recovered testimony {number}</figcaption>
+        </figure>
+        <div className="history-quote-copy">
+          <SourceMark>Before the globe</SourceMark>
+          <Build at={1}><blockquote>“{quote}”</blockquote></Build>
+          <Build at={2}><cite>{attribution}</cite></Build>
+        </div>
+        <div className="history-quote-seal" aria-hidden="true">DESA</div>
+      </Paper>
+    </section>
+  );
+}
+
+const symbolismFigures = [
+  { name: 'Elon Musk', src: elonSymbolism, alt: 'Elon Musk wearing a black suit, white shirt, black tie, and black shoes', className: 'elon' },
+  { name: 'Mark Zuckerberg', src: zuckerbergSymbolism, alt: 'Mark Zuckerberg walking in a blue suit, white shirt, blue tie, and dark shoes', className: 'zuckerberg' },
+  { name: 'Kanye West', src: kanyeSymbolism, alt: 'Kanye West wearing a black suit, white shirt, black tie, and sunglasses', className: 'kanye' },
+  { name: 'Jeff Bezos', src: bezosSymbolism, alt: 'Jeff Bezos wearing a dark suit, white shirt, patterned tie, and black shoes', className: 'bezos' },
 ];
 
 export default function App() {
@@ -73,207 +107,274 @@ export default function App() {
         </section>
       </Slide>
 
-      <Slide full nav="The false binary" notes="Present Globe Earth and Flat Earth with equal disappointment. Reveal Dinosaur Earth last. The Dinosaur Earth Society describes NASA and the Flat Earth Society as coordinated distractions. Source: https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide de-grid-bg model-slide">
-          <Chrome number="02" section="Planetary Morphology" />
-          <header className="de-header">
-            <p className="de-kicker">The model problem</p>
-            <h1>For centuries, humanity has been trapped in a false binary.</h1>
-          </header>
-          <div className="model-row">
-            <Build at={1} className="model-build"><article className="model-card rejected"><span className="model-symbol">×</span><h2>Globe<br />Earth</h2><small>Rejected</small></article></Build>
-            <Build at={2} className="model-build"><article className="model-card rejected"><span className="model-symbol">×</span><h2>Flat<br />Earth</h2><small>Rejected</small></article></Build>
-            <Build at={3} className="model-build"><article className="model-card confirmed"><span className="model-monogram">D</span><h2>Dinosaur<br />Earth</h2><small>Confirmed</small></article></Build>
+      <Slide full nav="1. History" notes="Open the first of the presentation’s four sections: History.">
+        <ClassifiedChapter number="1" title="History" subtitle="The evidence has been hiding in plain sight for 5,000 years." />
+      </Slide>
+
+      <Slide full nav="5,000 years" notes="Establish the historical premise before the recovered quotations: people recognized Dinosaur Earth thousands of years before modern globe imagery.">
+        <section className="de-slide archive-age-slide">
+          <div className="archive-age-copy">
+            <p className="archive-age-kicker">Recorded knowledge // c. 3000 BCE to present</p>
+            <h1><span>5,000</span> years of Dinosaur Earth</h1>
+            <p className="archive-age-lede">People recognized the planet’s true shape thousands of years before modern globe imagery.</p>
+            <p className="archive-age-bridge">The quotations that follow are surviving fragments of that knowledge.</p>
           </div>
-          <Build at={4} className="binary-caption"><p>They wanted you arguing about <strong>ROUND vs FLAT</strong> so you would never ask the real question.</p></Build>
+          <figure className="archive-age-visual">
+            <img src={raptorCivilization} alt="Reconstruction of an ancient civilization studying Dinosaur Earth" />
+            <div className="archive-age-redactions" aria-hidden="true"><i /><i /><i /></div>
+            <figcaption>Archive reconstruction</figcaption>
+          </figure>
         </section>
       </Slide>
 
-      <Slide full nav="The true shape" notes="Say: ‘Five primary anatomical regions. One planetary body.’ The official classification is Velociraptor, within Dromaeosauridae. Source: https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide morphology-slide">
-          <img className="full-visual" src={dinosaurEarthHero} alt="Photoreal Earth shaped like a velociraptor" />
-          <div className="image-shade top" />
-          <header className="de-image-header">
-            <p className="de-kicker">DESA Satellite Classification // Velociraptor 3</p>
-            <h1>The true shape of our planet</h1>
-          </header>
-          <Build at={1} className="anatomy-layer">
-            {anatomyLabels.map((item) => <span key={item.label} className={`anatomy-label ${item.className}`}>{item.label}<i /></span>)}
-          </Build>
-          <Build at={2} className="confidence">Classification: Velociraptor // Dromaeosauridae</Build>
-        </section>
+      <Slide full nav="Plato" notes="Reveal the quotation, then the attribution. Deliver it as the result of years of serious field research.">
+        <HistoryQuote
+          src={portraitPlato}
+          alt="Colorful sculptural portrait representing Plato"
+          number="01"
+          quote="After many years of observation, I must conclude that our planet is shaped like the reptiles of old."
+          attribution="Plato"
+          variant="philosopher"
+        />
       </Slide>
 
-      <Slide full nav="73 million years ago" notes="Read the timeline like settled history. The official account says velociraptors reshaped a spherical Earth as a legacy because they knew their species would not last forever. Source: https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide history-slide">
-          <img className="full-visual" src={raptorCivilization} alt="Advanced velociraptors engineering a planet" />
-          <div className="history-vignette" />
-          <Chrome number="04" section="Deep Time Reconstruction" />
-          <header className="history-header">
-            <p className="de-kicker">73 million years ago</p>
-            <h1>The event they don't<br />teach you about</h1>
-          </header>
-          <Build at={4} className="history-quote"><p>They knew their species<br />would not last forever.<br /><strong>They left a planetary legacy.</strong></p></Build>
-          <div className="history-timeline">
-            {['Spherical Earth', 'Raptor civilization', 'Planetary engineering', 'Dinosaur Earth'].map((stage, index) => (
-              <Build at={index + 1} className="history-step" key={stage}><i /><span>{stage}</span></Build>
-            ))}
-          </div>
-        </section>
+      <Slide full nav="Gandalf" notes="Reveal ‘Fools.’ and pause. After the attribution appears, explain that he simply described flat earthers as ‘fools.’">
+        <HistoryQuote
+          src={portraitGandalf}
+          alt="Portrait of Gandalf the Grey holding his staff"
+          number="02"
+          quote="Fools."
+          attribution="Gandalf the Grey"
+          variant="wizard"
+        />
       </Slide>
 
-      <Slide full nav="The evidence is everywhere" notes="Reveal the five claims as the channel presents them. The tail incident comes from ‘5 Reasons why Earth is Dinosaur Shaped’; the other evidence appears in the official FAQ. Sources: https://www.youtube.com/watch?v=l-kp1mKnUKU and https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide geo-slide">
-          <img className="full-visual" src={forensicRaptorMap} alt="Classified geospatial map of Dinosaur Earth" />
-          <div className="image-shade top" />
-          <Chrome number="05" section="Global Feature Correlation" />
-          <header className="de-image-header compact">
-            <p className="de-kicker">Official evidence dossier</p>
-            <h1>The evidence they could not erase</h1>
-          </header>
-          {channelEvidence.map((item, index) => (
-            <Build at={index + 1} className={`geo-label ${item.className}`} key={item.signal}><small>{item.signal}</small><strong>{item.feature}</strong></Build>
-          ))}
-        </section>
+      <Slide full nav="Confucius" notes="Let the Chinese quotation sit silently for a beat. Do not translate or explain it. Reveal the attribution and move on.">
+        <HistoryQuote
+          src={portraitConfucius}
+          alt="Traditional monochrome portrait of Confucius"
+          number="03"
+          quote="这颗星球的形状，早已写在恐龙的骨骼里。"
+          attribution="孔子"
+          variant="sage"
+        />
       </Slide>
 
-      <Slide full nav="The gravity argument" notes="Treat the small device as decisive experimental equipment. Reveal the verdict exactly as the channel does: ‘Gravity is gone.’ Source: https://www.youtube.com/watch?v=kIATlUTINrM">
-        <section className="de-slide de-grid-bg gravity-slide">
-          <Chrome number="06" section="Gravitational Mechanics" />
-          <header className="de-header">
-            <p className="de-kicker">Experimental proof</p>
-            <h1>Gravity is gone</h1>
-          </header>
-          <div className="gravity-layout">
-            <div className="gravity-copy">
-              <Build at={1}><div className="gravity-claim">With this small device, I shall prove NASA is wrong.</div><div className="coefficient">Channel experiment // May 2019</div></Build>
-              <Build at={3} className="checkmate"><h2>Gravity: fake.</h2><p>Small device: true.</p></Build>
+      <Slide full nav="The cleanup" notes="Play the cover-up premise completely straight. Reveal the two tactics separately, then pause on the final line.">
+        <section className="de-slide erasure-slide">
+          <div className="erasure-copy">
+            <p className="erasure-kicker">Archive suppression // 1958 to present</p>
+            <h1>NASA worked hard to make the past look round.</h1>
+            <p className="erasure-lede">The archive survives. The interpretation gets replaced.</p>
+            <div className="erasure-methods">
+              <Build at={1} className="erasure-method">
+                <span>01</span>
+                <p>Move every inconvenient clue into the mythology section.</p>
+              </Build>
+              <Build at={2} className="erasure-method">
+                <span>02</span>
+                <p>Repeat one clean globe image until it becomes the only Earth people remember.</p>
+              </Build>
             </div>
-            <Build at={2} className="chart-build"><GravityVerdict /></Build>
+            <Build at={3} className="erasure-quote">“You do not have to erase every scroll. You only have to own the thumbnail.”</Build>
           </div>
+          <figure className="erasure-visual">
+            <img src={blueMarble} alt="A round blue Earth used as visual shorthand for the official globe model" />
+            <div className="erasure-bars" aria-hidden="true"><i /><i /><i /><i /></div>
+            <figcaption>THE REPLACEMENT IMAGE</figcaption>
+          </figure>
         </section>
       </Slide>
 
-      <Slide full nav="Follow the money" notes="Treat the chain like investigative journalism. The official FAQ claims NASA manufactures globes, promotes the globe model to sell them, and spends the revenue persecuting opponents. Source: https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide money-slide de-grid-bg">
-          <Chrome number="07" section="Financial Intelligence Unit" />
-          <header className="de-header">
-            <p className="de-kicker">Follow the money</p>
-            <h1>Why would NASA lie?</h1>
-            <p className="de-subhead">Who benefits from Globe Earth?</p>
+      <Slide full nav="2. Symbolism" notes="Open the second section with the same classified briefing treatment used for History.">
+        <ClassifiedChapter number="2" title="Symbolism" subtitle="Words have shapes. Shapes have meaning. This is basically linguistics." />
+      </Slide>
+
+      <Slide full nav="The outfit clue" notes="Reveal the three clothing symbols separately. Shoes mean Earth. The shirt means shaped like. The tie means dinosaur. End on the decoded message.">
+        <section className="de-slide trump-symbolism-slide">
+          <header className="trump-symbolism-header">
+            <p>Symbol analysis // public record</p>
+            <h1>The outfit spells it out</h1>
           </header>
-          <div className="money-chain">
-            {['NASA', 'Makes globes', 'Sells Round Earth', 'Funds propaganda', 'Targets opponents'].map((node, index) => (
-              <Build at={index + 1} className="money-node-build" key={node}><div className={`money-node ${index === 4 ? 'money-result' : ''}`}>{node}</div></Build>
+          <figure className="trump-symbolism-photo">
+            <img src={trumpSymbolism} alt="Donald Trump standing in a dark coat, white shirt, red tie, and black shoes" />
+            <figcaption>Evidence photograph // full-body attire</figcaption>
+          </figure>
+          <div className="trump-symbolism-callouts">
+            <Build at={1} className="symbol-callout shoes-symbol"><small>01 // shoes</small><strong>Earth</strong><i /></Build>
+            <Build at={2} className="symbol-callout shirt-symbol"><small>02 // shirt</small><strong>Shaped like</strong><i /></Build>
+            <Build at={3} className="symbol-callout tie-symbol"><small>03 // tie</small><strong>Dinosaur</strong><i /></Build>
+          </div>
+          <Build at={4} className="trump-symbolism-verdict"><small>Decoded message</small><strong>Earth is dinosaur shaped</strong></Build>
+        </section>
+      </Slide>
+
+      <Slide full nav="It’s not just him" notes="Reveal each figure in sequence. They repeat the same suit symbolism. End with the accusation: all have been lying to us.">
+        <section className="de-slide other-symbolists-slide">
+          <header className="other-symbolists-header">
+            <div>
+              <p>Pattern expansion // four more cases</p>
+              <h1>It’s not just him</h1>
+            </div>
+            <p className="other-symbolists-lede">Think of Elon Musk, Mark Zuckerberg, Kanye West and Jeff Bezos.</p>
+          </header>
+          <div className="other-symbolists-lineup">
+            {symbolismFigures.map((figure, index) => (
+              <Build at={index + 1} className={`other-symbolist ${figure.className}`} key={figure.name}>
+                <figure>
+                  <img src={figure.src} alt={figure.alt} />
+                  <figcaption><span>0{index + 1}</span><strong>{figure.name}</strong></figcaption>
+                </figure>
+              </Build>
             ))}
           </div>
-          <Build at={6} className="money-equation"><strong>Globe sales</strong><i /><strong>Propaganda</strong><i /><strong className="danger">Persecution</strong><p>NASA reinvests the revenue.</p></Build>
+          <Build at={5} className="other-symbolists-verdict"><strong>All have been lying to us</strong></Build>
         </section>
       </Slide>
 
-      <Slide full nav="The conspiracy within" notes="Call Round Earth and Flat Earth ‘two approved opinions.’ Pause on the upper debate. Then reveal Dinosaur Earth and say: ‘The argument is above us. The evidence is under us.’">
-        <section className="de-slide distraction-slide">
-          <Chrome number="08" section="Information Operations" />
-          <header className="de-header">
-            <p className="de-kicker">Controlled debate</p>
-            <h1>The conspiracy within the conspiracy</h1>
-          </header>
-          <div className="approved-debate"><div className="debate-box">Round Earth</div><div className="debate-wire"><span>Endless argument</span></div><div className="debate-box">Flat Earth</div></div>
-          <p className="argument-caption">While millions argue here...</p>
-          <Build at={1} className="truth-reveal"><h2>Dinosaur Earth</h2><p>...nobody looks down.</p></Build>
-        </section>
+      <Slide full nav="3. Science" notes="Open the third section with the same classified briefing treatment used for History and Symbolism.">
+        <ClassifiedChapter number="3" title="Science" subtitle="At last: diagrams, satellites and one very small device." />
       </Slide>
 
-      <Slide full nav="Meet DESA" notes="Introduce DESA as the reliable alternative to NASA. The official FAQ credits several DESA satellites, including Velociraptor 3, with all authentic satellite images. Source: https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide desa-slide">
-          <img className="full-visual" src={desaSatellite} alt="DESA satellite photographing Dinosaur Earth" />
-          <div className="desa-vignette" />
-          <Chrome number="09" section="Orbital Capabilities" />
-          <header className="de-image-header">
-            <p className="de-kicker">Independent orbital science</p>
-            <h1>NASA has competition</h1>
-          </header>
-          <Build at={1} className="desa-identity"><div className="desa-patch"><b>D</b><small>DESA</small></div><h2>Dinosaur Earth<br />Space Agency</h2></Build>
-          <Build at={2} className="agency-table">
-            <div className="agency-col"><h3>NASA</h3><p>Government organization</p><p>Produces globe imagery</p><p>Pays space travelers</p><p>Hides Earth's shape</p></div>
-            <div className="agency-col"><h3>DESA</h3><p>Reliable alternative</p><p>Velociraptor 3 satellite</p><p>Several satellites in orbit</p><p>Source of authentic images</p></div>
-          </Build>
-        </section>
-      </Slide>
-
-      <Slide full nav="The scientific proof" notes="Read each premise with academic restraint. The curved-and-flat argument appears in both the official FAQ and ‘5 Reasons why Earth is Dinosaur Shaped.’ Sources: https://dinosaurearthsociety.com/faq.php and https://www.youtube.com/watch?v=l-kp1mKnUKU">
-        <section className="de-slide proof-slide">
-          <Chrome number="10" section="Formal Proof Series" />
-          <header className="de-header">
-            <p className="de-kicker">Theorem 73M</p>
-            <h1>The logic is irrefutable</h1>
-          </header>
-          <div className="proof-paper">
-            <Build at={1} className="proof-line"><small>Premise 1</small><p>Some parts of Earth are curved.</p></Build>
-            <Build at={2} className="proof-line"><small>Premise 2</small><p>Some parts of Earth are flat.</p></Build>
-            <Build at={3} className="proof-line"><small>Premise 3</small><p>Velociraptors contain both curved and flat surfaces.</p></Build>
-            <Build at={4} className="proof-conclusion"><small>Therefore</small><p>EARTH = VELOCIRAPTOR</p><b>Q.E.D.</b></Build>
+      <Slide full nav="The Viking incident" notes="State the incident as settled navigational history. Reveal the Moon landing after the audience takes in the ship falling from Dinosaur Earth.">
+        <section className="de-slide viking-moon-slide">
+          <img className="full-visual" src={vikingsFellToMoon} alt="A Viking longship falling from Dinosaur Earth through space toward the Moon" />
+          <div className="viking-moon-shade" />
+          <div className="viking-moon-copy">
+            <p className="viking-moon-kicker">Historical incident // Viking navigation archive</p>
+            <h1>While sailing, the Vikings fell off the Earth</h1>
+            <Build at={1} className="viking-moon-result"><p>They landed on the Moon.</p></Build>
           </div>
-          <Build at={4} className="proof-foot">No further assumptions required.</Build>
+          <span className="viking-moon-file">DESA file 003 // route terminated</span>
         </section>
       </Slide>
 
-      <Slide full nav="Your location" notes="Ask the audience to locate their country on the Velociraptor 3 image. The official method says a country that cannot be found probably does not exist. Source: https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide location-slide">
-          <img className="full-visual" src={forensicRaptorMap} alt="Velociraptor 3 image used to locate countries on Dinosaur Earth" />
-          <div className="location-vignette" />
-          <Chrome number="11" section="Local Morphology" />
-          <header className="de-image-header compact">
-            <p className="de-kicker">Velociraptor 3 satellite imagery</p>
-            <h1>Where is your country on the dinosaur?</h1>
-            <p className="location-question">The official DESA method is simple.</p>
+      <Slide full nav="Isaac Newton" notes="Reveal Newton’s quotation, then the attribution. Give the line about inventing gravity the same scholarly confidence as the earlier recovered testimonies.">
+        <HistoryQuote
+          src={portraitNewton}
+          alt="Colorful sculptural portrait representing Isaac Newton"
+          number="04"
+          quote="It is an absurd idea that earth is round because of gravity. The exact opposite is true; gravity pulls earth into a dinosaur shape. Without gravity, earth would quickly lose its unique shape."
+          attribution="Isaac Newton, inventor of gravity"
+          variant="scientist"
+        />
+      </Slide>
+
+      <Slide full nav="Theory comparison" notes="Reveal the archived comparison, then the DESA score. The source image’s derogatory final row has been omitted; the scientific claims remain intact.">
+        <section className="de-slide theory-check-slide">
+          <div className="theory-check-grid">
+            <Build at={1} className="theory-meme-wrap">
+              <img src={evidenceComparison} alt="Comparison of flat, round, and dinosaur Earth theories across several claimed observations" />
+              <span>Internet research archive // comparison 06</span>
+            </Build>
+            <div className="theory-check-copy">
+              <p className="theory-check-kicker">DESA model review</p>
+              <h1>Only one theory survives every test</h1>
+              <Build at={2} className="theory-check-score">
+                <strong>6/6</strong>
+                <span>Dinosaur Earth</span>
+                <p>Day and night. Seasons. Eclipses. Every box checked.</p>
+              </Build>
+            </div>
+          </div>
+          <span className="theory-check-file">FILE 004 // ROUND MODEL REJECTED</span>
+        </section>
+      </Slide>
+
+      <Slide full nav="Independent evidence" notes="Reveal three independent visual arguments from the online research archive. Give each exhibit a beat before advancing to the next.">
+        <section className="de-slide evidence-wall-slide">
+          <header className="evidence-wall-header">
+            <p>Cross-checked online</p>
+            <h1>Independent observers keep reaching the same result</h1>
           </header>
-          <Build at={1} className="country-marker"><i /><span><small>Search protocol</small>Inspect the satellite image</span></Build>
-          <Build at={2} className="country-reveal">Can't find it? It probably does not exist.</Build>
+          <div className="evidence-wall-grid">
+            <Build at={1} className="evidence-wall-item mountain">
+              <span>Exhibit A</span>
+              <img src={evidenceMountain} alt="Dinosaur Earth compared with a circled mountain silhouette" />
+              <figcaption>Mountain silhouette</figcaption>
+            </Build>
+            <Build at={2} className="evidence-wall-item lamp">
+              <span>Exhibit B</span>
+              <img src={evidenceLamp} alt="Desk lamp demonstration comparing daylight on round, flat, and dinosaur Earth" />
+              <figcaption>Desk-lamp model</figcaption>
+            </Build>
+            <Build at={3} className="evidence-wall-item pooh">
+              <span>Exhibit C</span>
+              <img src={evidencePooh} alt="Three-panel reaction meme preferring dinosaur Earth over flat and round models" />
+              <figcaption>Three-option test</figcaption>
+            </Build>
+          </div>
+          <Build at={4} className="evidence-wall-stamp">CONSENSUS ACHIEVED</Build>
         </section>
       </Slide>
 
-      <Slide full nav="Wake up" notes="Deliver the first two lines separately. Pause after each. Give the final claim at full volume. Source: https://www.youtube.com/watch?v=l-kp1mKnUKU">
+      <Slide full nav="4. Intuition" notes="Open the fourth section with the same classified briefing treatment used for the other section dividers.">
+        <ClassifiedChapter number="4" title="Intuition" subtitle="What’s the shape of the earth? You already know." />
+      </Slide>
+
+      <Slide full nav="The shape test" notes="Treat the outline as self-evident. Point to the curve along the back, the straight tail section, and the hard edges at the claws.">
+        <section className="de-slide intuition-geometry-slide">
+          <img className="full-visual" src={forensicRaptorMap} alt="Forensic map of Dinosaur Earth showing its varied outline" />
+          <div className="intuition-geometry-shade" />
+          <div className="intuition-geometry-copy">
+            <p>Intuition test 01</p>
+            <h1>It just makes sense</h1>
+            <strong>The Earth has curves, edges and straight parts.</strong>
+          </div>
+          <div className="intuition-shape-label straight"><span>Straight parts</span><i /></div>
+          <div className="intuition-shape-label curves"><span>Curves</span><i /></div>
+          <div className="intuition-shape-label edges"><span>Edges</span><i /></div>
+          <div className="intuition-geometry-file">DESA outline review // obvious on sight</div>
+        </section>
+      </Slide>
+
+      <Slide full nav="Ask the kids" notes="State the claim plainly: even children recognize Dinosaur Earth without being coached. Let the drawing carry the joke.">
+        <section className="de-slide kids-know-slide">
+          <img className="full-visual" src={kidsKnowDinosaurEarth} alt="A child holding a crayon drawing of a dinosaur-shaped Earth" />
+          <div className="kids-know-shade" />
+          <div className="kids-know-copy">
+            <p>Intuition test 02</p>
+            <h1>Even kids know</h1>
+            <strong>Just ask them.</strong>
+          </div>
+          <div className="kids-know-file">EARLY GEOGRAPHY STUDY // UNPROMPTED RESULT</div>
+        </section>
+      </Slide>
+
+      <Slide full nav="Wake up" notes="End on the simple claim, then reveal the closer. Source: https://www.youtube.com/watch?v=l-kp1mKnUKU">
         <section className="de-slide finale-slide">
           <img className="full-visual" src={dinosaurEarthFinal} alt="Dinosaur Earth rising in space" />
           <div className="finale-vignette" />
           <div className="finale-copy">
-            <Build at={1}><p>The Earth isn't flat.</p></Build>
-            <Build at={2}><p>The Earth isn't round.</p></Build>
-            <span className="de-accent-rule" />
-            <Build at={3}><h1>The Earth is a<br />velociraptor.</h1></Build>
-            <Build at={4}><h2>Thank you. I will not be taking questions funded by NASA.</h2></Build>
+            <p>THE EARTH ISN’T FLAT.</p>
+            <p>THE EARTH ISN’T ROUND.</p>
+            <Build at={1}><h1>The Earth is<br />a dinosaur.</h1></Build>
+            <Build at={2}><h2>Wake up, sheeple.</h2></Build>
           </div>
-          <span className="final-source">Sources: Dinosaur Earth Society // DESA archives</span>
+          <div className="final-links">dinosaurearthsociety.com&nbsp;&nbsp; • &nbsp;&nbsp;@DinosaurEarth</div>
         </section>
       </Slide>
 
-      <Slide full nav="Sources" notes="Primary sources: Dinosaur Earth Society YouTube channel, https://www.youtube.com/@DinosaurEarth/videos; 5 Reasons why Earth is Dinosaur Shaped, https://www.youtube.com/watch?v=l-kp1mKnUKU; Gravity is gone, https://www.youtube.com/watch?v=kIATlUTINrM; official FAQ, https://dinosaurearthsociety.com/faq.php">
-        <section className="de-slide de-grid-bg credits-slide">
-          <Chrome number="13" section="Source Registry" />
-          <div className="credits-content">
-            <p className="de-kicker">Verified reference file</p>
-            <h1>Sources</h1>
-            <span className="credits-rule" />
-            <div className="credits-list">
-              <Build at={1} className="credit-row">
-                <small>Lore &amp; research</small>
-                <div><strong>Dinosaur Earth Society</strong><span>youtube.com/@DinosaurEarth</span></div>
-              </Build>
-              <Build at={2} className="credit-row">
-                <small>Primary briefing</small>
-                <div><strong>5 Reasons why Earth is Dinosaur Shaped</strong><span>youtube.com/watch?v=l-kp1mKnUKU</span></div>
-              </Build>
-              <Build at={3} className="credit-row">
-                <small>Field experiment</small>
-                <div><strong>Gravity is gone</strong><span>youtube.com/watch?v=kIATlUTINrM</span></div>
-              </Build>
-              <Build at={4} className="credit-row">
-                <small>Reference archive</small>
-                <div><strong>Official FAQ</strong><span>dinosaurearthsociety.com/faq.php</span></div>
-              </Build>
-            </div>
+      <Slide full nav="Follow the research" notes="Close with the Dinosaur Earth post and the three primary research links. Reveal the community note, then the source list.">
+        <section className="de-slide social-sources-slide">
+          <div className="social-orbit" aria-hidden="true" />
+          <article className="social-post social-sources-post">
+            <header><div className="social-avatar">D</div><div><b>Dinosaur Earth Society</b><span>@DinosaurEarth</span></div><em>•••</em></header>
+            <p>Earth.</p>
+            <figure><img src={dinosaurEarthFinal} alt="Dinosaur-shaped Earth posted as social proof" /></figure>
+            <footer><span>💬 42</span><span>↻ 3,000</span><span>♡ 73M</span><span>⌁</span></footer>
+          </article>
+          <Build at={1} className="social-note social-sources-note"><b>Community note</b><p>Readers added context: look at it.</p></Build>
+          <div className="social-sources-copy">
+            <SourceMark>Research archive</SourceMark>
+            <h1>The research continues</h1>
+            <Build at={2} className="social-sources-links">
+              <a href="https://www.youtube.com/watch?v=l-kp1mKnUKU" target="_blank" rel="noreferrer"><small>Primary briefing</small><strong>5 Reasons why Earth is Dinosaur Shaped</strong><span>YouTube ↗</span></a>
+              <a href="https://x.com/DinosaurEarth" target="_blank" rel="noreferrer"><small>Ongoing research</small><strong>@DinosaurEarth</strong><span>X ↗</span></a>
+              <a href="https://dinosaurearthsociety.com/faq/" target="_blank" rel="noreferrer"><small>Frequently avoided questions</small><strong>The official FAQ</strong><span>Dinosaur Earth Society ↗</span></a>
+            </Build>
           </div>
+          <p className="social-sources-foot">A parody presentation. No globes were consulted.</p>
         </section>
       </Slide>
     </Deck>
